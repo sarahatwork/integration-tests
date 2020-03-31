@@ -24,6 +24,7 @@ function loginReducer(state, action) {
         error: null,
       };
     }
+    /* istanbul ignore next */
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
