@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import { LoginModule } from './';
+import errors from '../errors';
 
 describe('LoginModule', () => {
   test('initial state', () => {
@@ -55,7 +56,7 @@ describe('LoginModule', () => {
   test('error login', async () => {
     jest
       .spyOn(window, 'fetch')
-      .mockResolvedValue({ json: () => ({ error: 'invalid password' }) });
+      .mockResolvedValue({ json: () => ({ error: 'Missing password' }) });
 
     const { getByLabelText, getByText, getByRole } = render(<LoginModule />);
 
@@ -80,7 +81,7 @@ describe('LoginModule', () => {
       // it displays error text
       const errorText = getByText('Error:');
       expect(errorText).toBeInTheDocument();
-      const errorMessageText = getByText('invalid password');
+      const errorMessageText = getByText(errors['Missing password']);
       expect(errorMessageText).toBeInTheDocument();
     });
   });

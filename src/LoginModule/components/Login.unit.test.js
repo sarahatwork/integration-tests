@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { Login } from './Login';
+import errors from '../../errors';
 
 describe('Login', () => {
   it('renders default state', () => {
@@ -27,12 +28,12 @@ describe('Login', () => {
 
   it('renders error state', () => {
     const { getByText } = render(
-      <Login state={{ status: 'rejected', error: 'invalid password' }} />
+      <Login state={{ status: 'rejected', error: 'Missing password' }} />
     );
 
     const errorText = getByText('Error:');
     expect(errorText).toBeInTheDocument();
-    const errorMessageText = getByText('invalid password');
+    const errorMessageText = getByText(errors['Missing password']);
     expect(errorMessageText).toBeInTheDocument();
   });
 });
