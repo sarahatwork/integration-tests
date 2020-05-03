@@ -2,6 +2,8 @@ import React from 'react';
 import { Box, Typography } from '@material-ui/core';
 import { LoginForm } from './LoginForm';
 
+import errors from '../../errors';
+
 export function Login({ state, onSubmit }) {
   if (state.user) {
     return (
@@ -22,7 +24,7 @@ export function Login({ state, onSubmit }) {
       {isError && (
         <Box m={1}>
           <Typography variant="body1">
-            <b>Error: </b> {state.error}
+            <b>Error: </b> {errors[state.error] || errors.default}
           </Typography>
         </Box>
       )}

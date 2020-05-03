@@ -1,0 +1,5 @@
+{
+  "default": "An unknown error has occurred. We're sorry!",
+  "Missing password": "Please enter a password.",
+  "user not found": "A user for these credentials has not been found - please contact the administrator."
+}
