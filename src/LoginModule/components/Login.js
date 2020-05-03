@@ -1,15 +1,13 @@
 import React from 'react';
-import { Box, Typography } from '@material-ui/core';
 import { LoginForm } from './LoginForm';
+import Alert from '@material-ui/lab/Alert';
 
 export function Login({ state, onSubmit }) {
   if (state.user) {
     return (
-      <Box m={1}>
-        <Typography variant="body1">
-          Logged in as <b>{state.user.email}</b>
-        </Typography>
-      </Box>
+      <Alert severity="success">
+        Logged in as <b>{state.user.email}</b>
+      </Alert>
     );
   }
 
@@ -19,13 +17,7 @@ export function Login({ state, onSubmit }) {
   return (
     <>
       <LoginForm onSubmit={onSubmit} isLoading={isLoading} />
-      {isError && (
-        <Box m={1}>
-          <Typography variant="body1">
-            <b>Error: </b> {state.error}
-          </Typography>
-        </Box>
-      )}
+      {isError && <Alert severity="error">{state.error}</Alert>}
     </>
   );
 }

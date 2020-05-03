@@ -77,9 +77,6 @@ describe('LoginModule', () => {
       expect(button.disabled).toBe(false);
       expect(button.textContent).toBe('Submit');
 
-      // it displays error text
-      const errorText = getByText('Error:');
-      expect(errorText).toBeInTheDocument();
       const errorMessageText = getByText('invalid password');
       expect(errorMessageText).toBeInTheDocument();
     });

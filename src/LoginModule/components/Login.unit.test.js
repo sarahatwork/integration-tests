@@ -30,8 +30,6 @@ describe('Login', () => {
       <Login state={{ status: 'rejected', error: 'invalid password' }} />
     );
 
-    const errorText = getByText('Error:');
-    expect(errorText).toBeInTheDocument();
     const errorMessageText = getByText('invalid password');
     expect(errorMessageText).toBeInTheDocument();
   });
