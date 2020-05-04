@@ -1,38 +1,34 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Login } from './Login';
 
 describe('Login', () => {
   it('renders default state', () => {
-    const { getByRole } = render(<Login state={{ status: 'idle' }} />);
+    render(<Login state={{ status: 'idle' }} />);
 
-    const submitButton = getByRole('button');
+    const submitButton = screen.getByRole('button');
     expect(submitButton).toBeInTheDocument();
   });
 
   it('renders signed in state', () => {
-    const { getByText, queryByRole } = render(
-      <Login state={{ user: { email: 'test@email.com' } }} />
-    );
+    render(<Login state={{ user: { email: 'test@email.com' } }} />);
 
-    const loggedInText = getByText('Logged in as');
+    const loggedInText = screen.getByText('Logged in as');
     expect(loggedInText).toBeInTheDocument();
-    const emailAddressText = getByText('test@email.com');
+    const emailAddressText = screen.getByText('test@email.com');
     expect(emailAddressText).toBeInTheDocument();
 
     // form is not rendered
-    const submitButton = queryByRole('button');
+    const submitButton = screen.queryByRole('button');
     expect(submitButton).toBeNull();
   });
 
   it('renders error state', () => {
-    const { getByText } = render(
-      <Login state={{ status: 'rejected', error: 'invalid password' }} />
-    );
+    render(<Login state={{ status: 'rejected', error: 'invalid password' }} />);
 
-    const errorText = getByText('Error:');
+    const errorText = screen.getByText('Error:');
     expect(errorText).toBeInTheDocument();
-    const errorMessageText = getByText('invalid password');
+    const errorMessageText = screen.getByText('invalid password');
     expect(errorMessageText).toBeInTheDocument();
   });
 });

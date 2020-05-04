@@ -1,32 +1,30 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { LoginForm } from './LoginForm';
 
 describe('LoginForm', () => {
   test('initial state', () => {
-    const { getByLabelText, getByRole } = render(<LoginForm />);
+    render(<LoginForm />);
 
     // it renders empty email and passsword fields
-    const emailField = getByLabelText('Email');
-    expect(emailField.value).toBe('');
-    const passwordField = getByLabelText('Password');
-    expect(passwordField.value).toBe('');
+    const emailField = screen.getByRole('textbox', { name: 'Email' });
+    expect(emailField).toHaveValue('');
+    const passwordField = screen.getByLabelText('Password');
+    expect(passwordField).toHaveValue('');
 
     // it renders enabled submit button
-    const button = getByRole('button');
-    expect(button.disabled).toBe(false);
-    expect(button.textContent).toBe('Submit');
+    const button = screen.getByRole('button');
+    expect(button).not.toBeDisabled();
+    expect(button).toHaveTextContent('Submit');
   });
 
   it('calls onSubmit with form data on submit button click', () => {
     const onSubmitSpy = jest.fn();
-    const { getByLabelText, getByRole } = render(
-      <LoginForm onSubmit={onSubmitSpy} />
-    );
+    render(<LoginForm onSubmit={onSubmitSpy} />);
 
-    const emailField = getByLabelText('Email');
-    const passwordField = getByLabelText('Password');
-    const button = getByRole('button');
+    const emailField = screen.getByRole('textbox', { name: 'Email' });
+    const passwordField = screen.getByLabelText('Password');
+    const button = screen.getByRole('button');
 
     // fill out and submit form
     fireEvent.change(emailField, { target: { value: 'test@email.com' } });
@@ -40,11 +38,11 @@ describe('LoginForm', () => {
   });
 
   it('updates button on loading state', () => {
-    const { getByRole } = render(<LoginForm isLoading />);
+    render(<LoginForm isLoading />);
 
-    const button = getByRole('button');
+    const button = screen.getByRole('button');
 
-    expect(button.disabled).toBe(true);
-    expect(button.textContent).toBe('Loading...');
+    expect(button).toBeDisabled();
+    expect(button).toHaveTextContent('Loading...');
   });
 });
